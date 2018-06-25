@@ -25,6 +25,7 @@ if(MSVC)
       #/wd4503      # decorated name length exceeded, name was truncated
       /W4           # enable all warnings
       /MP           # Multi-processor compilation
+      /await        # allow co_await
       )
   set (CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
   set (CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /Ob2 /Oi /Ot /GL /MT")
@@ -58,24 +59,6 @@ link_directories(${Boost_LIBRARY_DIRS})
 
 include_directories(./include)
 
-file(GLOB APP_FILES
-  main.cpp
-  README.md)
+add_subdirectory (experiment)
+add_subdirectory (sample)
 
-file(GLOB REXP_FILES
-  lib/waiter.cpp)
-
-source_group("" FILES ${APP_FILES})
-
-add_executable(main ${APP_FILES} ${REXP_FILES})
-
-if(NOT WIN32)
-  find_package(Threads)
-  target_link_libraries(main PRIVATE Threads::Threads)
-endif()
-
-set_target_properties(main PROPERTIES
-  VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY
-  VS_STARTUP_PROJECT main)
