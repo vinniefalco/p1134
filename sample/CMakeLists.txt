@@ -7,6 +7,7 @@
 # Official repository: https://github.com/vinniefalco/p1134
 #
 
-source_group("" FILES hello_co_yield_1.cpp)
-add_executable (hello-co-yield-1 hello_co_yield_1.cpp)
-set_property(TARGET hello-co-yield-1 PROPERTY FOLDER "sample")
+include_directories (.)
+source_group ("" FILES hello_co_yield_1.cpp generator.hpp)
+add_executable (hello-co-yield-1 hello_co_yield_1.cpp generator.hpp)
+set_property (TARGET hello-co-yield-1 PROPERTY FOLDER "sample")

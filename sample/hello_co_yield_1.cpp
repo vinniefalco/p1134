@@ -7,3 +7,22 @@
 // Official repository: https://github.com/vinniefalco/p1134
 //
 
+#include "generator.hpp"
+
+#include <experimental/coroutine>
+#include <cstdio>
+
+cppcoro::generator<const char>
+hello(const char* p)
+{
+    while (*p) {
+        co_yield *p++;
+    }
+}
+
+int main()
+{
+    for (const auto c : hello("Hello, world")) {
+        std::putchar(c);
+    }
+}
